@@ -2,7 +2,7 @@ import React from 'react'
 import { Navbar, Container, Nav, Form, Button, Dropdown, DropdownButton } from 'react-bootstrap'
 import { useHistory } from 'react-router'
 import { useSelector , useDispatch } from 'react-redux'
-import { logout , logout_auth } from '../../actions'
+import Logoutt from '../auth/google/logout'
 import { Link } from 'react-router-dom'
 
 const Navbarr = () => {
@@ -16,12 +16,6 @@ const Navbarr = () => {
         const query = document.getElementById('search').value
         
         history.push(`/search/${query}`)
-    }
-
-    const onLogout = () => {
-        dispatch(logout())
-        dispatch(logout_auth())
-        history.push('/')
     }
 
     return(
@@ -58,7 +52,7 @@ const Navbarr = () => {
                                     <Dropdown.Item><Link to="/list" className="text-white" style={{textDecoration:'none'}}>My List</Link></Dropdown.Item>
                                     <Dropdown.Item><Link to="/favorite" className="text-white" style={{textDecoration:'none'}}>Favorite</Link></Dropdown.Item>
                                     <Dropdown.Item><Link to="/bookmark" className="text-white" style={{textDecoration:'none'}}>Bookmark</Link></Dropdown.Item>
-                                    <Dropdown.Item onClick={()=>{onLogout()}}>Logout</Dropdown.Item>
+                                    <Dropdown.Item><Logoutt>Logout</Logoutt></Dropdown.Item>
                                 </DropdownButton>
                             </>
                         ):(

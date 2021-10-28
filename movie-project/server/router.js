@@ -232,4 +232,26 @@ router.delete('/delete_bookmark/:id', (req, res) => {
   })
 })
 
+router.post('/login_check',(req,res)=>{
+  let email = req.body.email
+
+  db.query('SELECT * FROM users WHERE email = ?',[email],(error,results)=>{
+    if(error) throw error
+    if(results.length>0){
+      return res.send({
+        error:false,
+        data:results[0],
+        message:'User Exists'
+      })
+    }else{
+      return res.send({
+        error:true,
+        message:'User Not Found'
+      })
+    }
+    
+  })
+
+})
+
 module.exports = router;
