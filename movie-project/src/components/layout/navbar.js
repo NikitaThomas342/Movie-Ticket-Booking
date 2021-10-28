@@ -25,8 +25,8 @@ const Navbarr = () => {
     }
 
     return(
-        <>
-            <Navbar className="shadow-lg" bg="dark" variant="dark" expand="lg">
+        <div style={{boxShadow:'rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px'}}>
+            <Navbar className="shadow-lg" bg="dark" variant="dark" expand="lg" >
                 <Container>
                     <Link to="/" className="navbar-brand mx-5"><b>MOVIES</b></Link>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -72,7 +72,7 @@ const Navbarr = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-        </>
+        </div>
     )
 }
 

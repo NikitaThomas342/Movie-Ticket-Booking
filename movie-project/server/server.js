@@ -4,33 +4,20 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const indexRouter = require('./router.js');
-var passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy;
+const cookieParser = require('cookie-parser')
+
+//google
+const {OAuth2Client} = require('google-auth-library');
+const CLIENT_ID = '371109756681-599bu64ani7nu12av4m8ieruiq8c3f34.apps.googleusercontent.com'
+const client = new OAuth2Client(CLIENT_ID);
+
 
 const app = express();
 
-passport.use(new FacebookStrategy({
-  clientID: '208029371403890',
-  clientSecret: '47b288b07ef5ab87177e3f3b2a40b21e',
-  callbackURL: 'http://localhost:5000/auth/facebook/callback',
-  profileFields: ['id','displayName','name','email'],
-  passReqToCallback:true,
-},
-function(req,accessToken, refreshToken, profile, done) {
-  try{
-      console.log(req)
-      if(profile){
-          req.user = profile
-          done(null,profile)
-      }
-  }catch(err){
-      done(err)
-  }
-})
-);
-
 app.use(express.json());
- 
+
+app.use(cookieParser())
+
 app.use(bodyParser.json());
  
 app.use(bodyParser.urlencoded({
@@ -39,18 +26,33 @@ app.use(bodyParser.urlencoded({
  
 app.use(cors());
 
-app.use(passport.initialize())
-
 app.use('/api', indexRouter);
 
-app.get('/auth/facebook', passport.authenticate('facebook'))
+//google
+app.post('/google/login', (req,res)=>{
+  let token = req.body.token;
 
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { 
-  session: false, 
-  failureRedirect: 'http://localhost:3000' 
-}),(req,res)=>{
-  res.redirect('http://localhost:3000/')
-});
+  async function verify() {
+      const ticket = await client.verifyIdToken({
+          idToken: token,
+          audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+      });
+      const payload = ticket.getPayload();
+      const userid = payload['sub'];
+    }
+    verify()
+    .then(()=>{
+        res.cookie('session-token', token);
+        res.send('success')
+    })
+    .catch(console.error);
+})
+
+app.get('/google/logout', (req, res)=>{
+  res.clearCookie('session-token');
+  res.redirect('/login')
+})
+//
 
 // Handling Errors
 app.use((err, req, res, next) => {

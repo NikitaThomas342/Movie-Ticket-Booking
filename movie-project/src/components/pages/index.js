@@ -40,6 +40,22 @@ const Home = () => {
         })
     }, [])
 
+    const [theater, setTheater] = useState([])
+
+    useEffect(()=>{
+        axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=a1c34846e3b8867dfa62cbc29a53950e&language=en-US&page=1`).then((response)=>{
+            setTheater(response.data.results)
+        })
+    },[])
+
+    const [upcoming, setcoming] = useState([])
+
+    useEffect(()=>{
+        axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=a1c34846e3b8867dfa62cbc29a53950e&language=en-US&page=1`).then((response)=>{
+            setcoming(response.data.results)
+        })
+    },[])
+
     return(
         <>
             <div className="d-flex flex-column">
@@ -66,7 +82,49 @@ const Home = () => {
                     </Carousel>
                 </Container>
 
+                <h3 className="my-4">In Theaters</h3>
+                <Container className="my-1">
+                    <Carousel responsive={responsive}>
+                        {theater.map((data)=>{
+                                if(data.title!==undefined){
+                                    return(
+                                        <div>
+                                            <Item key={data.id} item={data}/>
+                                        </div>
+                                    )
+                                }else{
+                                    return(
+                                        <div>
+                                            <Itemtv key={data.id} item={data}/>
+                                        </div>
+                                    )
+                                }
+                            })
+                        }
+                    </Carousel>
+                </Container>
 
+                <h3 className="my-4">Upcoming Movies</h3>
+                <Container className="my-1">
+                    <Carousel responsive={responsive}>
+                        {upcoming.map((data)=>{
+                                if(data.title!==undefined){
+                                    return(
+                                        <div>
+                                            <Item key={data.id} item={data}/>
+                                        </div>
+                                    )
+                                }else{
+                                    return(
+                                        <div>
+                                            <Itemtv key={data.id} item={data}/>
+                                        </div>
+                                    )
+                                }
+                            })
+                        }
+                    </Carousel>
+                </Container>
 
             </div>
         </>

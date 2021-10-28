@@ -2,8 +2,13 @@ import React ,{useState}from 'react'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import Swal from 'sweetalert2'
+import { useHistory } from 'react-router'
+import { CloseButton } from 'react-bootstrap'
 
 const ListsSub = ({item}) => {
+
+    const history = useHistory()
 
     const type = item.type
     const id = item.item_id
@@ -22,13 +27,44 @@ const ListsSub = ({item}) => {
         }
     },[])
 
+    const onDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirm'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:5000/api/delete_list/${id}`).then((response)=>{
+                    if(response.status===200){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Item Deleted.',
+                            timer: 1500
+                        })
+                        history.push('/')
+                        history.push('/list')
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Error!',
+                        })
+                    }
+                })
+            }
+        })
+    }
 
     if(type==='movie'){
         return(
-            <div className="p-3 shadow mx-2 my-3" style={{borderRadius:'10px',width:'300px',height:'530px'}}>
+            <div className="p-3 shadow mx-2 my-3" style={{borderRadius:'10px',width:'300px',height:'550px'}}>
                 <div className="d-flex flex-column justify-content-around align-items-center">
-                    
+                    <CloseButton onClick={()=>{onDelete(item.id)}} style={{marginRight:'-250px'}}/>
                     <div className="p-2">
+                        
                         <Link to={`/movie/${list.id}`}>
                             <a className="shadow">
                                 <img style={{borderRadius:'10px'}} src={'https://www.themoviedb.org/t/p/w220_and_h330_face'+list.poster_path} alt="..."/>
@@ -53,9 +89,9 @@ const ListsSub = ({item}) => {
         )
     }else{
         return(
-            <div className="p-3 shadow mx-2 my-3" style={{borderRadius:'10px',width:'300px',height:'530px'}}>
+            <div className="p-3 shadow mx-2 my-3" style={{borderRadius:'10px',width:'300px',height:'550px'}}>
                     <div className="d-flex flex-column justify-content-around align-items-center">
-                        
+                        <CloseButton onClick={()=>{onDelete(item.id)}} style={{marginRight:'-250px'}}/>
                         <div className="p-2">
                             <Link to={`/tvshow/${list.id}`}>
                             <a className="shadow">

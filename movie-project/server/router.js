@@ -196,4 +196,40 @@ router.post('/get_bookmark',(req,res,next)=>{
     })
 })
 
+router.delete('/delete_list/:id', (req, res) => {
+  let id = req.params.id
+  db.query('DELETE FROM list WHERE id = ?',[id],(error,results)=>{
+    if(error) throw error
+    return res.send({
+      error:false,
+      data:results,
+      message:'Item Deleted'
+    })
+  })
+})
+
+router.delete('/delete_favorite/:id', (req, res) => {
+  let id = req.params.id
+  db.query('DELETE FROM favorite WHERE id = ?',[id],(error,results)=>{
+    if(error) throw error
+    return res.send({
+      error:false,
+      data:results,
+      message:'Item Deleted'
+    })
+  })
+})
+
+router.delete('/delete_bookmark/:id', (req, res) => {
+  let id = req.params.id
+  db.query('DELETE FROM bookmark WHERE id = ?',[id],(error,results)=>{
+    if(error) throw error
+    return res.send({
+      error:false,
+      data:results,
+      message:'Item Deleted'
+    })
+  })
+})
+
 module.exports = router;

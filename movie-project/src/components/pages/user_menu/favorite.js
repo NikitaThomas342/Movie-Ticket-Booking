@@ -11,7 +11,7 @@ const Favorite = () => {
 
     useEffect(()=>{
         let user_id = user_data.id
-        axios.post('http://localhost:5000/api/get_bookmark',{
+        axios.post('http://localhost:5000/api/get_favorite',{
             user_id:user_id
         }).then((response)=>{
             setFavorites(response.data.data)

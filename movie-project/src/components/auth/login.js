@@ -6,6 +6,7 @@ import { useHistory } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { login , login_auth } from '../../actions'
 import Swal from 'sweetalert2'
+import Loginn from './google/login'
 
 const Login = () => {
 
@@ -84,6 +85,7 @@ const Login = () => {
 
     return(
         <>
+            
             <Container className="my-5 bg-dark p-5 shadow-lg" style={{width:'500px',borderRadius:"20px"}}>
                 <Form>
                     <h3 className="text-white"><b>Login</b></h3>
@@ -97,14 +99,16 @@ const Login = () => {
                         <Form.Label className="text-white"><b>Password</b></Form.Label>
                         <Form.Control type="password" id="password" className="form-control" placeholder="Enter password" />
                     </Form.Group>
+                    <div className="d-flex flex-row">
 
-                    <Button variant="primary" onClick={()=>{onLogin()}} className="my-3">
-                        <b>Submit</b>
-                    </Button>
+                        <Button variant="primary" onClick={()=>{onLogin()}} className="my-3" style={{height:'42px',width:'94px'}}>
+                            <b>Submit</b>
+                        </Button>
+                        <div className="my-3 mx-3">
+                            <Loginn/>
+                        </div>
+                    </div>
                     
-                        <a href='http://localhost:5000/auth/facebook'>
-                            <b>Login With Facebook</b>
-                        </a>
                     
                     <b>
                         <p className="forgot-password text-right my-3">
