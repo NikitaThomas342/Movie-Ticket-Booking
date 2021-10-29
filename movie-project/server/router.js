@@ -238,11 +238,20 @@ router.post('/login_check',(req,res)=>{
   db.query('SELECT * FROM users WHERE email = ?',[email],(error,results)=>{
     if(error) throw error
     if(results.length>0){
-      return res.send({
-        error:false,
-        data:results[0],
-        message:'User Exists'
-      })
+        const token = jwt.sign(
+          { id: results[0].id },
+          "the-super-strong-secrect",
+          { expiresIn: "1h" }
+        );
+        db.query(
+          `UPDATE users SET last_login = now() WHERE id = '${results[0].id}'`
+        );
+        return res.status(200).send({
+          error:false,
+          msg: "Logged in!",
+          token: token,
+          user: results[0],
+        });
     }else{
       return res.send({
         error:true,

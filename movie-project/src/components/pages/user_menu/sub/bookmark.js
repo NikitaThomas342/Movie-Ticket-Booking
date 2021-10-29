@@ -5,9 +5,15 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useHistory } from 'react-router'
 import { CloseButton } from 'react-bootstrap'
+import { useSelector , useDispatch } from 'react-redux'
+import { logout , logout_auth } from '../../../../actions'
+
 
 const BookmarkSub = ({item}) => {
 
+    const token = useSelector(state=>state.token)
+
+    const dispatch = useDispatch()
     const history = useHistory()
 
     const type = item.type
@@ -37,23 +43,46 @@ const BookmarkSub = ({item}) => {
             confirmButtonText: 'Confirm'
             }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/api/delete_bookmark/${id}`).then((response)=>{
+                
+                
+                axios.post('http://localhost:5000/api/get-user',{},{
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'authorization': 'Bearer ' + token
+                    }
+                }).then((response)=>{
                     if(response.status===200){
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Item Deleted.',
-                            timer: 1500
-                        })
-                        history.push('/')
-                        history.push('/bookmark')
+                        
+                    axios.delete(`http://localhost:5000/api/delete_bookmark/${id}`).then((response)=>{
+                        if(response.status===200){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Item Deleted.',
+                                timer: 1500
+                            })
+                            history.push('/')
+                            history.push('/bookmark')
+                        }else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Error!',
+                            })
+                        }
+                    })
+
                     }else{
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
-                            text: 'Error!',
+                            text: 'Session Expired.',
                         })
+                        dispatch(logout())
+                        dispatch(logout_auth())
+                        history.push('/')
                     }
                 })
+            
             }
         })
     }
