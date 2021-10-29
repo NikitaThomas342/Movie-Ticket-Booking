@@ -1,7 +1,5 @@
 ## About The Project
 
-[![MOVIE][MOVIE]](https://localhost:3000)
-
 A movie website with a beautiful UI, using OAuth 2.0 authentication for great security when loggin in and adding items to different lists, this website uses themoviedb API to get the latest movie/tv informations. The user can click on the movie they're interested in, watch the trailer, add to list for later watching.
 
 ### Why Use OAuth 2.0?
@@ -37,7 +35,6 @@ A movie website with a beautiful UI, using OAuth 2.0 authentication for great se
    npm install
    ```
 4. Example sql table included, simply import node.sql to your database.
-   ```
 ## Usage
 
 * run client side
