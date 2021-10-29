@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { login , login_auth } from '../../actions'
 import Swal from 'sweetalert2'
 import Loginn from './google/login'
+import FacebookLogin from 'react-facebook-login'
 
 const Login = () => {
 
@@ -83,6 +84,40 @@ const Login = () => {
 
     }
 
+    const FLogin = (response) => {
+        let email = response.email
+        axios.post('http://localhost:5000/api/login_check',{
+            email:email
+        }).then((response)=>{
+
+            if(!response.data.error){
+                let user_data = response.data.user
+                let token = response.data.token
+
+                dispatch(login(user_data))
+                dispatch(login_auth(token))
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Success',
+                    timer: 1500
+                })
+
+                history.push('/')
+                
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text:'User Not Found'
+                    })
+                    history.push('/register')
+                }
+
+        })
+    }
+
+
     return(
         <>
             
@@ -102,12 +137,24 @@ const Login = () => {
                     <div className="d-flex flex-row">
 
                         <Button variant="primary" onClick={()=>{onLogin()}} className="my-3" style={{height:'42px',width:'94px'}}>
-                            <b>Submit</b>
+                            <b>Login</b>
                         </Button>
                         <div className="my-3 mx-3">
                             <Loginn/>
                         </div>
+                        
+                        
                     </div>
+                    <div className="my-3">
+                            <FacebookLogin
+                                appId="1468356620212652"
+                                autoLoad={true}
+                                fields="email"
+                                scope="public_profile,user_friends"
+                                callback={FLogin}
+                                icon="fa-facebook" 
+                            />
+                        </div>
                     
                     
                     <b>
@@ -115,15 +162,6 @@ const Login = () => {
                             <Link to="/forgetpassword" style={{textDecoration:'none'}}>
                                 <div className="d-flex flex-row">
                                     <div className="text-white">Don't have an account yet? </div><a className="mx-2" style={{textDecoration:'none'}}>Register</a>
-                                </div>
-                            </Link>
-                        </p>
-                    </b>
-                    <b>
-                        <p className="forgot-password text-right my-3">
-                            <Link to="/forgetpassword" style={{textDecoration:'none'}}>
-                                <div className="d-flex flex-row">
-                                    <div className="text-white">Forgot </div><a className="mx-2" style={{textDecoration:'none'}}>password?</a>
                                 </div>
                             </Link>
                         </p>
