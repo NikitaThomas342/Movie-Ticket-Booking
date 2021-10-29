@@ -1,18 +1,23 @@
-<div id="top"></div>
-
 ## About The Project
 
 [![MOVIE][MOVIE]](https://localhost:3000)
 
+A movie website with a beautiful UI, using OAuth 2.0 authentication for great security when loggin in and adding items to different lists, this website uses themoviedb API to get the latest movie/tv informations. The user can click on the movie they're interested in, watch the trailer, add to list for later watching.
+
+### Why Use OAuth 2.0?
+
+- It is easy to implement and provides strong authentication. In addition to the two-factor authentication, tokens can be revoked if necessary.
+- Uses SSL to ensure that data between the web server and browsers remains private.
+
 ### Built With
 
-* [React.js](https://reactjs.org/)
-* [Bootstrap](https://getbootstrap.com)
-
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+* [React.js]
+* [Bootstrap]
+* [Express]
+* [MySQL]
+* [Redux]
+* [SweetAlert]
+* [Axios]
 
 ### Prerequisites
 
@@ -31,27 +36,32 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+4. Example sql table included, simply import node.sql to your database.
    ```
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+* run client side
+   ```sh
+   npm start
+* run server side
+   ```sh
+   cd server
+   npm start
 
 ## Roadmap
 
-- [] Feature 1
-- [] Feature 2
-- [] Feature 3
-    - [] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+- UX-UI
+- Api Calling
+- Database
+- Authentication 
+    - OAuth Using Database
+    - OAuth with Google
+    - OAuth with Facebook
 
 ## Contact
 
-Nikita Thomas - nt1606@gmail.com
+Nikita Thomas - nt1606@gmail.com - 632110342
 
-Project Link: [https://github.com/NikitaThomas342/Movie-Ticket-Booking](https://github.com/NikitaThomas342/Movie-Ticket-Booking)
+## Project Link
+
+[https://github.com/NikitaThomas342/Movie-Ticket-Booking](https://github.com/NikitaThomas342/Movie-Ticket-Booking)
