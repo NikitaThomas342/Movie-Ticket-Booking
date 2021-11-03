@@ -17,6 +17,22 @@ A movie website with a beautiful UI, using OAuth 2.0 authentication for great se
 * [SweetAlert]
 * [Axios]
 
+### API Integration
+
+1. Movie API
+   ```sh
+   https://www.themoviedb.org/
+   ```
+2. Google Login API
+   ```sh
+   https://console.cloud.google.com/
+   ```
+
+3. Facebook Login API
+   ```sh
+   https://developers.facebook.com/
+   ```
+
 ### Prerequisites
 
 * npm

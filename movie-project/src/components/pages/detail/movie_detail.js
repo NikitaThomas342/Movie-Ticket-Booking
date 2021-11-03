@@ -66,8 +66,9 @@ const MovieDetail = () => {
 
                             <b><h5 className="text-white my-3">Overview</h5></b>
                             <p class="text-monospace text-white my-1 mx-3">{movie.overview}</p>
-
-                            <Button href={watch} target="_blank" className="my-3"><b>Watch now</b></Button>
+                            
+                            {watch!==undefined ? (<Button href={watch} target="_blank" className="my-3"><b>Watch now</b></Button>):(<></>)}
+                            
                             <b><h5 className="text-white my-3">{video ? (
                                 <>
                                     {video.name}
